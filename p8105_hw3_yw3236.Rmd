@@ -52,3 +52,21 @@ formated_brfss_smart2010_2002 = formated_brfss_smart2010 %>%
 
 In 2002, CT, FL, NC were observed at 7 locations.
 
+### Question 2
+
+Make a “spaghetti plot” that shows the number of locations in each state from 2002 to 2010.
+
+```{r}
+plot_2002_to_2010 = formated_brfss_smart2010 %>%
+  select(., year, state) %>%
+  group_by(year, state) %>%
+  summarize(n_location = n())
+
+  ggplot(plot_2002_to_2010, aes(x = year, y = n_location, color = state)) +
+  geom_line() +
+  labs(x = "Year", y = "Number of Locations")
+
+plot_2002_to_2010
+```
+
+There are many lines in the plot, just like "spaghetti". It's kind of difficult to read information from this plot.
