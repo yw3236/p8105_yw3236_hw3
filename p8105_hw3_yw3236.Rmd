@@ -286,3 +286,49 @@ ggplot(jan_jul_temp, aes(x = year, y = average_max_temp)) +
 ```
 
 There is an observable structure. The average max temperature in Jan is lower than the average max temperature in Jul. There are outiers. Those outilers are easily to be identified from boxplot.
+
+### Question 3
+
+Plot tmax vs tmin for the full dataset. 
+
+```{r}
+library(hexbin)
+
+temp = formated_ny_noaa %>%
+  select(., id, year, month, day, tmax, tmin) %>%
+  filter(., !is.na(tmax) & !is.na(tmin)) 
+
+temp_plot = ggplot(temp, aes(x = tmin, y = tmax)) +     
+  geom_hex() +    
+  labs(x = "Min Temp (C)",
+       y = "Max Temp (C)")
+
+temp_plot
+```
+
+There are two peaks in the hex plot. The first peak is around minimum temperature 0 C and maximum temperature 5 C. The second peak is around minimum temperature 13 C and maximum temperature 23 C.
+
+Make a plot showing the distribution of snowfall values greater than 0 and less than 100 separately by year.
+
+```{r}
+snowfall = formated_ny_noaa %>%
+  select(., id, year, month, day, snow) %>%
+  filter(., snow > 0 & snow < 100) %>%
+  group_by(year)
+
+snow_plot = ggplot(snowfall) + 
+  geom_boxplot(aes(x = year, y = snow)) +
+  labs(x = "Year", y = "Snow (mm)")
+
+snow_plot
+```
+
+Each year's box plot is relatively same. The median of each year's snow distribution is almost same. Only a few years, such as 1998, 2004, 2006, 2007, 2010, have different first quartile and third quartile.
+
+Combine two plots.
+
+```{r}
+require(gridExtra)
+grid.arrange(temp_plot, snow_plot, ncol = 2)
+```
+
