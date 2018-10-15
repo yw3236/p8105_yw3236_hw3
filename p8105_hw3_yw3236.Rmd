@@ -227,3 +227,14 @@ table_mean_hour
 ```
 
 From the table, we can see coffee ice cream is usually bought after 12AM and pink laby apples are usually bought before 12AM.
+
+# Problem 3
+
+```{r}
+data(ny_noaa)
+```
+
+#### Description of the Dataset
+
+The size of the dataset is 2,595,176 x 7. I would say all of the variables in the dataset are key variables because different problems need different variables. The structure of this data is ready for the analysis, except for seperating date variable. Each variable of this dataset have lots of missing values. Those missing data might couse not accurate result.
+
