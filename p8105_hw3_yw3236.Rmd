@@ -62,7 +62,7 @@ plot_2002_to_2010 = formated_brfss_smart2010 %>%
   group_by(year, state) %>%
   summarize(n_location = n())
 
-  ggplot(plot_2002_to_2010, aes(x = year, y = n_location, color = state)) +
+ggplot(plot_2002_to_2010, aes(x = year, y = n_location, color = state)) +
   geom_line() +
   labs(x = "Year", y = "Number of Locations")
 
@@ -142,3 +142,24 @@ most_order_aisles
 
 There are 134 aisles there. The most items ordered from fresh vegetables aisle.
 
+### Question 2
+
+Make a plot that shows the number of items ordered in each aisle.
+
+```{r}
+order_aisles = instacart %>%
+  select(., aisle, product_id) %>%
+  arrange(., aisle, product_id) %>%
+  group_by(aisle) %>%
+  summarise(item_num = n()) %>%
+  arrange(., desc(item_num))
+
+ggplot(order_aisles, aes(x = reorder(aisle, -item_num), y = item_num)) +  
+  geom_point() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, size = rel(1))) +
+  labs(x = "Aisle", y = "Number of Items")
+
+order_aisles
+```
+
+Since there are too many aisles in the x axis, I choose to order the `item_num` as decending order and adjust the theme of the graph, such as set the angle is 90. From the graph, we can see that there are few items that has really high number of items. The number of items of the majority of aisles is under 50000. 
