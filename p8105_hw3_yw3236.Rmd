@@ -90,3 +90,22 @@ formated_brfss_smart2010_excellent_NY
 ```
 
 From the table, we can see that year 2002 has the highest mean and standard deviation of the proportion of “Excellent” responses across locations in NY State.
+
+### Question 4
+
+* For each year and state, compute the average proportion in each response category. * Make a five-panel plot that shows, for each response category separately, the distribution of these state-level averages over time.
+
+```{r}
+response_average_prop = formated_brfss_smart2010 %>%
+  select(., year, state, county, response, data_value) %>%
+  group_by(year, state, response) %>%
+  summarise(average_prop = mean(data_value))
+
+response_average_prop
+
+ggplot(response_average_prop, aes(x = year, y = average_prop)) +
+  geom_point() +
+  facet_grid(~response)
+```
+
+For the **excellent** response, the average proportion of it from 2002 to 2010 is approximatelly between 15% and 30 %. For the **very good** response, the average proportion of it from 2002 to 2010 is approximatelly between 25% and 40%. For the **good** response, the average proportion of it from 2002 to 2010 is approximatelly between 25% and 35%. For the **fair** response, the average proportion of it from 2002 to 2010 is approximatelly between 5% and 15%. For the **poor** response, the average proportion of it from 2002 to 2010 is approximatelly between 0% and 10%.
