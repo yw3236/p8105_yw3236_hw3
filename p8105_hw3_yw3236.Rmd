@@ -264,3 +264,25 @@ common_snwd
 
 For snowfall, the most commonly observed values are 0. The reason is becasue snow only in winter time and winter time is relatively short comparing a whole year.
 
+### Question 2
+
+Make a two-panel plot showing the average max temperature in January and in July in each station across years. 
+
+```{r}
+jan_jul_temp = formated_ny_noaa %>%
+  select(., id, year, month, day, tmax) %>%
+  filter(., !is.na(tmax)) %>%
+  filter(., month == "01" | month == "07") %>%
+  group_by(year, month, id) %>%
+  summarise(average_max_temp = mean(tmax))
+
+ggplot(jan_jul_temp, aes(x = year, y = average_max_temp)) +
+  geom_point() +
+  facet_grid(~month)
+
+ggplot(jan_jul_temp, aes(x = year, y = average_max_temp)) +
+  geom_boxplot() +
+  facet_grid(~month) 
+```
+
+There is an observable structure. The average max temperature in Jan is lower than the average max temperature in Jul. There are outiers. Those outilers are easily to be identified from boxplot.
