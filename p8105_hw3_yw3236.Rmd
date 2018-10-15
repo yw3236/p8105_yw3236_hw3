@@ -120,4 +120,25 @@ data(instacart)
 
 The dataset is about instacart company sale information. The size of the dataset is 1,384,617 x 15. The structure of the dataset is ready for the analysis. The key variables are `order_dow`, `order_hour_of_day`, `product_name`, `aisle`. Each observation includes custmers' information, ordered products' imformation. 
 
+### Question 1
+
+```{r}
+n_aisles = nrow(instacart %>%
+  select(., aisle) %>%
+  unique(.))
+
+n_aisles
+
+most_order_aisles = instacart %>%
+  select(., aisle, product_id) %>%
+  arrange(., aisle, product_id) %>%
+  group_by(aisle) %>%
+  summarise(item_num = n()) %>%
+  arrange(., item_num) %>%
+  tail(5)
+
+most_order_aisles
+```
+
+There are 134 aisles there. The most items ordered from fresh vegetables aisle.
 
