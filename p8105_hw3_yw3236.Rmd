@@ -20,3 +20,21 @@ devtools::install_github("p8105/p8105.datasets")
 library(p8105.datasets)
 data(brfss_smart2010) 
 ```
+
+### Clean Data
+
+* Format the data to use appropriate variable names
+* Focus on the “Overall Health” topic
+* Include only responses from “Excellent” to “Poor”
+* Organize responses as a factor taking levels ordered from “Excellent” to “Poor”
+
+```{r}
+formated_brfss_smart2010 = brfss_smart2010 %>%
+  janitor::clean_names() %>%
+  rename(., state = locationabbr, county = locationdesc) %>%
+  filter(., topic == "Overall Health") %>%
+  filter(., response == "Excellent" | response == "Very good" | response == "Good" | response == "Fair" | response == "Poor") %>%
+  mutate(., factor(response, levels = c("Excellent", "Very good", "Good", "Fair", "Poor")))
+
+formated_brfss_smart2010
+```
